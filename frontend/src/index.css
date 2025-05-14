@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* ========== VARIÁVEIS ========== */
+:root {
+  --primary-color: #e50914;
+  --primary-color-dark: #B2080D;
+  --secondary-color: #888;
+  --font-family: 'Montserrat', sans-serif;
+  --grid-gutter: 24px;
+  --column-width: 78px;
+}
+
+/* ========== RESET BÁSICO ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background: #080808;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+/* ========== TIPOGRAFIA E ELEMENTOS BÁSICOS ========== */
+.logo-title {
+  font-family: var(--font-family);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--primary-color-dark);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Inputs e Textareas */
+input,
+textarea {
+  width: 100%;
+  margin: 8px 0;
+  padding: 8px;
+  border-radius: 4px;
+  border: none;
+}
+
+/* ===== BOTÃO BASE ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family);
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  gap: 8px;
+  transition: background 0.2s ease, border 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+}
+
+/* ===== VARIANTES ===== */
+
+/* Primário: fundo vermelho, texto branco */
+.btn-primary {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-color-dark);
+}
+
+/* Secundário: borda e texto vermelhos, fundo transparente */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.btn-secondary:hover {
+  background-color: transparent;
+  color: var(--primary-color-dark);
+  border: 1px solid var(--primary-color-dark);
+}
+
+/* Ghost: só o texto vermelho */
+.btn-ghost {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: none;
+}
+
+.btn-ghost:hover {
+  opacity: 0.7;
+}
+
+/* ===== TAMANHOS ===== */
+.btn-sm {
+  font-size: 12px;
+  padding: 10px 12px;
+}
+
+.btn-md {
+  font-size: 14px;
+  padding: 10px 16px;
+}
+
+.btn-lg {
+  font-size: 16px;
+  padding: 10px 24px;
+}
+
+/* ===== Ícone (opcional, se quiser estilizar diretamente) ===== */
+.btn .btn-icon {
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* ========== UTILITÁRIOS DE LAYOUT ========== */
+
+/* Containers */
+.container {
+  padding: 0px 120px;
+}
+
+.container-padded {
+  padding: 24px 120px;
+}
+
+.section-bottom-spacing {
+  padding-bottom: 40px;
+}
+
+/* Flex utilities */
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.flex-wrap-gap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: var(--grid-gutter);
+}
+
+/* Grid layout */
+.grid-12-col {
+  display: grid;
+  grid-template-columns: repeat(12, var(--column-width));
+  gap: var(--grid-gutter);
+}
+
+.empty-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  width: 100%;
+  flex-direction: column;
+}
+
+.empty-state {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 150%;
+  opacity: 0.2;
+  text-align: center;
+}
+
+.heading-xl {
+  color: #FFF;
+  font-family: Montserrat;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%;
+}
