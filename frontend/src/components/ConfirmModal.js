@@ -15,11 +15,19 @@ export default function ConfirmModal({
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <h2>{title}</h2>
-        <p>{message}</p>
+        <div className="modal-header">
+          <h2>{title}</h2>
+        </div>
+        <div className="modal-content">
+          <p>{message}</p>
+        </div>
         <div className="modal-actions">
-          <Button variant="ghost" onClick={onCancel}>{cancelText}</Button>
-          <Button variant="primary" onClick={onConfirm}>{confirmText}</Button>
+          <Button variant="ghost" onClick={onCancel}>
+            {cancelText}
+          </Button>
+          <Button variant="primary" onClick={onConfirm}>
+            {confirmText}
+          </Button>
         </div>
       </div>
     </div>

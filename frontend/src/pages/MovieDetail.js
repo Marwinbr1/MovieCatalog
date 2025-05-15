@@ -17,7 +17,7 @@ export default function MovieDetail() {
 
   return (
       <>
-        <Navbar />  
+      <Navbar /> 
         <div className="movie-detail">
           <div className="movie-detail__image">
             <img src={movie.image} alt={movie.title} />
