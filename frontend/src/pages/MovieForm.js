@@ -18,6 +18,8 @@ export default function MovieForm() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [pendingSubmit, setPendingSubmit] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -25,8 +27,14 @@ export default function MovieForm() {
       fetch(`http://localhost:3001/movies/${id}`)
         .then((res) => res.json())
         .then((movie) => {
-          setFields(movie);
-          setInitialFields(movie);
+          const movieAsString = Object.fromEntries(
+            Object.entries(movie).map(([k, v]) => [
+              k,
+              v == null ? '' : String(v),
+            ]),
+          );
+          setFields(movieAsString);
+          setInitialFields(movieAsString);
         })
         .finally(() => setIsLoading(false));
     }
@@ -35,16 +43,47 @@ export default function MovieForm() {
   const hasChanges = () => {
     if (!initialFields) return false;
     return Object.keys(fields).some(
-      (key) => fields[key] !== initialFields[key],
+      (key) => String(fields[key] ?? '') !== String(initialFields[key] ?? ''),
     );
   };
 
   function handleChange(e) {
     const { name, value } = e.target;
-    setFields((prev) => ({ ...prev, [name]: value }));
+    setFields((prev) => {
+      if (prev[name] === value) return prev;
+      return { ...prev, [name]: value };
+    });
+  }
+
+  function handleUpdateClick(e) {
+    e.preventDefault();
+    setShowUpdateModal(true);
+  }
+
+  async function submitUpdate() {
+    setIsLoading(true);
+    try {
+      await fetch('http://localhost:3001/movies/' + id, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(fields),
+      });
+      navigate('/');
+    } catch (error) {
+      console.error('Erro ao salvar filme:', error);
+      alert('Ocorreu um erro ao salvar o filme. Tente novamente.');
+    } finally {
+      setIsLoading(false);
+      setPendingSubmit(false);
+    }
   }
 
   async function handleSubmit(e) {
+    if (id && hasChanges()) {
+      e.preventDefault();
+      setShowUpdateModal(true);
+      return;
+    }
     e.preventDefault();
     setIsLoading(true);
     try {
@@ -60,6 +99,7 @@ export default function MovieForm() {
       alert('Ocorreu um erro ao salvar o filme. Tente novamente.');
     } finally {
       setIsLoading(false);
+      setPendingSubmit(false);
     }
   }
 
@@ -165,14 +205,26 @@ export default function MovieForm() {
             >
               Cancelar
             </Button>
-            <Button
-              variant="primary"
-              type="submit"
-              disabled={isLoading}
-              size="lg"
-            >
-              {isLoading ? 'Salvando...' : 'Salvar'}
-            </Button>
+            {id && hasChanges() ? (
+              <Button
+                variant="primary"
+                type="button"
+                disabled={isLoading}
+                size="lg"
+                onClick={handleUpdateClick}
+              >
+                {isLoading ? 'Salvando...' : 'Atualizar'}
+              </Button>
+            ) : (
+              <Button
+                variant="primary"
+                type="submit"
+                disabled={isLoading}
+                size="lg"
+              >
+                {isLoading ? 'Salvando...' : 'Salvar'}
+              </Button>
+            )}
           </div>
           {id && (
             <Button
@@ -208,6 +260,22 @@ export default function MovieForm() {
         onCancel={() => setShowCancelModal(false)}
         confirmText="Sim, cancelar"
         cancelText="Não, continuar editando"
+      />
+
+      <ConfirmModal
+        open={showUpdateModal}
+        title="Deseja salvar as alterações que acabou de fazer?"
+        message="Ao clicar em atualizar, as informações do filme serão alteradas."
+        onConfirm={() => {
+          setShowUpdateModal(false);
+          submitUpdate();
+        }}
+        onCancel={() => {
+          setShowUpdateModal(false);
+          setPendingSubmit(false);
+        }}
+        confirmText="Atualizar"
+        cancelText="Cancelar"
       />
     </div>
   );

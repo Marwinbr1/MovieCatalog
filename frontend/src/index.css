@@ -187,3 +187,30 @@ textarea {
   font-weight: 700;
   line-height: 100%;
 }
+
+/* ========== SCROLLBAR CUSTOMIZADA ========== */
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 10px;
+  background: #080808;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4D4D4D;
+  border-radius: 8px;
+  border: 2px solid #080808;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6e6e6e; /* Um tom mais claro ao passar o mouse (opcional) */
+}
+
+::-webkit-scrollbar-track {
+  background: #080808;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4D4D4D #080808;
+}
